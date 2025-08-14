@@ -1,9 +1,101 @@
 {% extends "base.html" %}
+{% block title %}Post a New Ride | Carpooling{% endblock %}
 {% block content %}
-<h1>Post a Ride</h1>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button class="btn btn-primary">Save</button>
-</form>
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="page-header">
+      <h1 class="page-title">Post a New Ride</h1>
+      <p class="page-subtitle">Share your journey and help others get around</p>
+    </div>
+
+    <div class="card glass-effect">
+      <div class="card-body">
+        <form method="post">
+          {% csrf_token %}
+          
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">
+                <i class="fas fa-map-marker-alt text-primary me-1"></i>From
+              </label>
+              {{ form.origin }}
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">
+                <i class="fas fa-map-marker-alt text-danger me-1"></i>To
+              </label>
+              {{ form.destination }}
+            </div>
+          </div>
+
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">
+                <i class="fas fa-clock me-1"></i>Departure Time
+              </label>
+              {{ form.departure_time }}
+            </div>
+            <div class="col-md-3">
+              <label class="form-label fw-semibold">
+                <i class="fas fa-users me-1"></i>Available Seats
+              </label>
+              {{ form.seats }}
+            </div>
+            <div class="col-md-3">
+              <label class="form-label fw-semibold">
+                <i class="fas fa-dollar-sign me-1"></i>Cost per Person
+              </label>
+              {{ form.cost }}
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <h6 class="fw-semibold mb-3">
+              <i class="fas fa-car me-2"></i>Vehicle Details (Optional)
+            </h6>
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label class="form-label">Make</label>
+                {{ form.car_make }}
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Model</label>
+                {{ form.car_model }}
+              </div>
+              <div class="col-md-4">
+                <label class="form-label">Color</label>
+                {{ form.car_color }}
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">License Plate</label>
+                {{ form.plate }}
+              </div>
+            </div>
+          </div>
+
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">
+                <i class="fas fa-map-pin me-1"></i>Pickup Notes
+              </label>
+              {{ form.pickup_notes }}
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">
+                <i class="fas fa-map-pin me-1"></i>Drop-off Notes
+              </label>
+              {{ form.dropoff_notes }}
+            </div>
+          </div>
+
+          <div class="d-grid">
+            <button class="btn btn-primary btn-lg" type="submit">
+              <i class="fas fa-plus me-2"></i>Post My Ride
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

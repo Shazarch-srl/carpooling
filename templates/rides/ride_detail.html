@@ -1,34 +1,151 @@
 {% extends "base.html" %}
+{% block title %}{{ object.origin }} to {{ object.destination }} | Carpooling{% endblock %}
 {% block content %}
-<h1>{{ object.origin }} → {{ object.destination }}</h1>
-<p>Driver: {{ object.driver.first_name }}</p>
-<p>Departure: {{ object.departure_time }}</p>
-<p>Seats: {{ object.seats }}</p>
-<p>Cost: {{ object.cost }}</p>
+<div class="row g-4">
+  <div class="col-lg-8">
+    <div class="card glass-effect">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-start mb-4">
+          <div>
+            <h1 class="card-title h3 mb-3">
+              <i class="fas fa-route text-primary me-2"></i>
+              {{ object.origin }} → {{ object.destination }}
+            </h1>
+            <div class="d-flex align-items-center text-muted mb-2">
+              <i class="fas fa-user-circle me-2"></i>
+              <span class="fw-semibold">Driver: {{ object.driver.first_name }}</span>
+            </div>
+          </div>
+          <div class="text-end">
+            <div class="badge bg-primary fs-5 mb-2">${{ object.cost }}</div>
+            <div class="text-muted small">per person</div>
+          </div>
+        </div>
 
-{% if user.is_authenticated and user != object.driver %}
-  <h2>Request Booking</h2>
-  <form method="post" action="{% url 'book_ride' object.pk %}">
-    {% csrf_token %}
-    {{ booking_form.as_p }}
-    <button class="btn btn-primary">Request</button>
-  </form>
-{% endif %}
+        <div class="row g-3 mb-4">
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded-3">
+              <small class="text-muted d-block mb-1">
+                <i class="fas fa-clock me-1"></i>Departure Time
+              </small>
+              <div class="fw-semibold">{{ object.departure_time|date:"l, F j, Y" }}</div>
+              <div class="text-primary">{{ object.departure_time|date:"g:i A" }}</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="p-3 bg-light rounded-3">
+              <small class="text-muted d-block mb-1">
+                <i class="fas fa-users me-1"></i>Available Seats
+              </small>
+              <div class="fw-semibold fs-4 text-primary">{{ object.seats }}</div>
+            </div>
+          </div>
+        </div>
 
-<h2>Bookings</h2>
-<ul class="list-group">
-  {% for booking in object.bookings.all %}
-  <li class="list-group-item d-flex justify-content-between align-items-center">
-    {{ booking.rider.first_name }} - {{ booking.seats }} seat(s) - {{ booking.status }}
-    {% if user == object.driver %}
-      <span>
-        <a class="btn btn-sm btn-success" href="{% url 'update_booking' booking.pk 'accepted' %}">Accept</a>
-        <a class="btn btn-sm btn-danger" href="{% url 'update_booking' booking.pk 'declined' %}">Decline</a>
-      </span>
+        {% if object.car_make or object.car_model or object.car_color %}
+        <div class="mb-4">
+          <h6 class="fw-semibold mb-2">
+            <i class="fas fa-car me-2"></i>Vehicle Information
+          </h6>
+          <div class="p-3 bg-light rounded-3">
+            {% if object.car_make %}
+              <div class="mb-1">
+                <strong>{{ object.car_make }} {{ object.car_model }}</strong>
+              </div>
+            {% endif %}
+            {% if object.car_color %}
+              <div class="text-muted">Color: {{ object.car_color }}</div>
+            {% endif %}
+            {% if object.plate %}
+              <div class="text-muted">Plate: {{ object.plate }}</div>
+            {% endif %}
+          </div>
+        </div>
+        {% endif %}
+
+        {% if object.pickup_notes or object.dropoff_notes %}
+        <div class="mb-4">
+          <h6 class="fw-semibold mb-2">
+            <i class="fas fa-info-circle me-2"></i>Additional Notes
+          </h6>
+          {% if object.pickup_notes %}
+            <div class="alert alert-info">
+              <strong>Pickup:</strong> {{ object.pickup_notes }}
+            </div>
+          {% endif %}
+          {% if object.dropoff_notes %}
+            <div class="alert alert-info">
+              <strong>Drop-off:</strong> {{ object.dropoff_notes }}
+            </div>
+          {% endif %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    {% if user.is_authenticated and user != object.driver %}
+    <div class="card glass-effect mb-4">
+      <div class="card-body">
+        <h5 class="card-title">
+          <i class="fas fa-ticket-alt me-2 text-primary"></i>Book This Ride
+        </h5>
+        <form method="post" action="{% url 'book_ride' object.pk %}">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Number of Seats</label>
+            {{ booking_form.seats }}
+          </div>
+          <button class="btn btn-primary w-100">
+            <i class="fas fa-paper-plane me-2"></i>Send Booking Request
+          </button>
+        </form>
+      </div>
+    </div>
     {% endif %}
-  </li>
-  {% empty %}
-  <li class="list-group-item">No bookings yet.</li>
-  {% endfor %}
-</ul>
+
+    <div class="card glass-effect">
+      <div class="card-header bg-transparent">
+        <h5 class="mb-0">
+          <i class="fas fa-list me-2"></i>Booking Requests
+        </h5>
+      </div>
+      <div class="card-body">
+        {% for booking in object.bookings.all %}
+        <div class="d-flex justify-content-between align-items-center p-3 mb-2 bg-light rounded-3">
+          <div>
+            <div class="fw-semibold">{{ booking.rider.first_name }}</div>
+            <small class="text-muted">{{ booking.seats }} seat{{ booking.seats|pluralize }}</small>
+            <div>
+              {% if booking.status == 'pending' %}
+                <span class="badge bg-warning text-dark">{{ booking.status|title }}</span>
+              {% elif booking.status == 'accepted' %}
+                <span class="badge bg-success">{{ booking.status|title }}</span>
+              {% else %}
+                <span class="badge bg-danger">{{ booking.status|title }}</span>
+              {% endif %}
+            </div>
+          </div>
+          {% if user == object.driver and booking.status == 'pending' %}
+          <div class="btn-group-vertical">
+            <a class="btn btn-sm btn-success" href="{% url 'update_booking' booking.pk 'accepted' %}">
+              <i class="fas fa-check me-1"></i>Accept
+            </a>
+            <a class="btn btn-sm btn-danger" href="{% url 'update_booking' booking.pk 'declined' %}">
+              <i class="fas fa-times me-1"></i>Decline
+            </a>
+          </div>
+          {% endif %}
+        </div>
+        {% empty %}
+        <div class="text-center text-muted py-3">
+          <i class="fas fa-inbox mb-2" style="font-size: 2rem;"></i>
+          <div>No bookings yet</div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

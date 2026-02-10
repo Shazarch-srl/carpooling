@@ -1,0 +1,264 @@
+{% extends "base.html" %}
+{% block title %}Ride Assistant | Radicar{% endblock %}
+{% block extra_head %}
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
+<style>
+  .chat-window {
+    max-height: 460px;
+    overflow-y: auto;
+    padding: 1.25rem;
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+  }
+
+  .chat-bubble {
+    padding: 0.75rem 1rem;
+    border-radius: 1rem;
+    margin-bottom: 0.75rem;
+    max-width: 90%;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .chat-bubble.user {
+    align-self: flex-end;
+    background: #eef2ff;
+  }
+
+  .chat-bubble.assistant {
+    align-self: flex-start;
+    background: #ffffff;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+  }
+
+  .chat-meta {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-bottom: 0.25rem;
+  }
+
+  .chat-loading {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .chat-loading span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    opacity: 0.3;
+    animation: chat-bounce 1s infinite ease-in-out;
+  }
+
+  .chat-loading span:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  .chat-loading span:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+
+  @keyframes chat-bounce {
+    0%, 80%, 100% { transform: translateY(0); opacity: 0.3; }
+    40% { transform: translateY(-4px); opacity: 1; }
+  }
+</style>
+{% endblock %}
+{% block content %}
+<div class="page-header">
+  <h1 class="page-title">Ride Assistant</h1>
+  <p class="page-subtitle">Ask about trips and get matches from live listings</p>
+</div>
+
+<div class="row g-4 align-items-start">
+  <div class="col-lg-5">
+    <div class="card glass-effect">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h5 class="mb-0">
+            <i class="fas fa-comments text-primary me-2"></i>Chat
+          </h5>
+          <form method="post">
+            {% csrf_token %}
+            <button class="btn btn-outline-primary btn-sm" type="submit" name="clear" value="1">
+              Clear
+            </button>
+          </form>
+        </div>
+
+        <div id="chat-window" class="d-flex flex-column chat-window mb-3">
+          {% if chat_history %}
+            {% for message in chat_history %}
+              <div class="chat-bubble {{ message.role }}">
+                <div class="chat-meta">{{ message.role|capfirst }}</div>
+                <div class="chat-message" data-md="{{ message.content|escapejs }}"></div>
+              </div>
+            {% endfor %}
+          {% else %}
+            <div class="text-muted">
+              Ask things like “Trips from Milan to Turin tomorrow morning under 15€” or
+              “Any rides this weekend with 2 seats?”
+            </div>
+          {% endif %}
+        </div>
+
+        {% if not chat_enabled %}
+          <div class="alert alert-warning">
+            OpenAI API key not configured. Add it to `.env` to enable the assistant.
+          </div>
+        {% endif %}
+
+        <form id="chat-form" method="post" data-chat-enabled="{{ chat_enabled|yesno:'true,false' }}">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Your message</label>
+            <textarea id="chat-input" class="form-control" name="message" rows="2" placeholder="Ask about rides..." {% if not chat_enabled %}disabled{% endif %}></textarea>
+            <input type="hidden" id="chat-message-hidden" name="message">
+          </div>
+          <button id="chat-send" class="btn btn-primary w-100" type="submit" {% if not chat_enabled %}disabled{% endif %}>
+            <i class="fas fa-paper-plane me-2"></i>Send
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-7">
+    <div class="card glass-effect mb-3">
+      <div class="card-body">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+          <div>
+            <h5 class="mb-1">
+              <i class="fas fa-filter text-primary me-2"></i>Filtered Trips
+            </h5>
+            <p class="text-muted mb-0">
+              Showing {{ showing_count }} of {{ match_count }} matching rides
+            </p>
+          </div>
+        </div>
+        {% if filter_labels %}
+          <div class="d-flex flex-wrap gap-2 mt-3">
+            {% for label in filter_labels %}
+              <span class="badge bg-light text-dark border">{{ label }}</span>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    {% include "rides/_ride_cards.html" with empty_title="No rides match yet" empty_message="Try asking the assistant with different dates, prices, or cities." %}
+  </div>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const chatWindow = document.getElementById("chat-window");
+    const chatInput = document.getElementById("chat-input");
+    const chatHidden = document.getElementById("chat-message-hidden");
+    const chatForm = document.getElementById("chat-form");
+    const chatSend = document.getElementById("chat-send");
+
+    const scrollToEnd = () => {
+      if (chatWindow) {
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+      }
+    };
+
+    const updateSendState = () => {
+      if (!chatInput || !chatSend) return;
+      const enabled = chatForm?.dataset.chatEnabled === "true";
+      const hasText = chatInput.value.trim().length > 0;
+      chatSend.disabled = !enabled || !hasText;
+    };
+
+    scrollToEnd();
+
+    const unescapeJsString = (text) => {
+      if (!text) return "";
+      try {
+        return JSON.parse(`"${text.replace(/"/g, '\\"')}"`);
+      } catch (error) {
+        return text;
+      }
+    };
+
+    const renderMarkdown = (text) => {
+      if (!window.marked || !window.DOMPurify) {
+        return text.replace(/\n/g, "<br>");
+      }
+      return DOMPurify.sanitize(marked.parse(text));
+    };
+
+    const appendBubble = (role, content, isMarkdown = true) => {
+      if (!chatWindow) return;
+      const bubble = document.createElement("div");
+      bubble.className = `chat-bubble ${role}`;
+      const meta = document.createElement("div");
+      meta.className = "chat-meta";
+      meta.textContent = role.charAt(0).toUpperCase() + role.slice(1);
+      const body = document.createElement("div");
+      if (isMarkdown) {
+        body.innerHTML = renderMarkdown(content);
+      } else {
+        body.innerHTML = content;
+      }
+      bubble.append(meta, body);
+      chatWindow.appendChild(bubble);
+    };
+
+    const showLoading = () => {
+      appendBubble(
+        "assistant",
+        '<div class="chat-loading"><span></span><span></span><span></span></div>',
+        false
+      );
+      scrollToEnd();
+    };
+
+    if (chatInput) {
+      chatInput.focus();
+      chatInput.addEventListener("input", updateSendState);
+      chatInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" && !event.shiftKey) {
+          event.preventDefault();
+          if (chatForm && chatSend && !chatSend.disabled) {
+            chatForm.requestSubmit();
+          }
+        }
+      });
+    }
+
+    if (chatForm) {
+      chatForm.addEventListener("submit", (event) => {
+        if (!chatInput || !chatSend) return;
+        const enabled = chatForm.dataset.chatEnabled === "true";
+        const message = chatInput.value.trim();
+        if (!enabled || !message) {
+          event.preventDefault();
+          return;
+        }
+        if (chatHidden) {
+          chatHidden.value = message;
+        }
+        chatInput.value = "";
+        updateSendState();
+        appendBubble("user", message, true);
+        showLoading();
+      });
+    }
+
+    const hydrateMessages = () => {
+      document.querySelectorAll(".chat-message[data-md]").forEach((node) => {
+        const raw = node.dataset.md || "";
+        const decoded = unescapeJsString(raw);
+        node.innerHTML = renderMarkdown(decoded);
+      });
+    };
+
+    hydrateMessages();
+    updateSendState();
+  });
+</script>
+{% endblock %}

@@ -1,99 +1,350 @@
 {% extends "base.html" %}
-{% block title %}Post a New Ride | Carpooling{% endblock %}
+{% block title %}Post a New Ride | Radicar{% endblock %}
+{% block extra_head %}
+<style>
+  .ride-form-page .page-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .ride-form-card {
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .ride-form-card .card-body {
+    padding: 2rem;
+  }
+
+  .ride-form-section {
+    padding: 1.5rem;
+    border-radius: 1rem;
+    background: rgba(248, 250, 252, 0.75);
+    border: 1px solid rgba(148, 163, 184, 0.16);
+  }
+
+  .ride-form-section + .ride-form-section {
+    margin-top: 1.25rem;
+  }
+
+  .ride-form-section-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .ride-form-section-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-color);
+    background: rgba(251, 109, 15, 0.14);
+  }
+
+  .ride-form-section-title {
+    margin: 0;
+    font-weight: 700;
+    font-size: 1.05rem;
+  }
+
+  .ride-form-section-subtitle {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.9rem;
+  }
+
+  .ride-form-optional {
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #64748b;
+    border: 1px dashed rgba(148, 163, 184, 0.5);
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+  }
+
+  .ride-form input,
+  .ride-form textarea,
+  .ride-form select {
+    width: 100%;
+    border: 2px solid #e2e8f0;
+    border-radius: 0.75rem;
+    padding: 0.75rem 1rem;
+    transition: all 0.25s ease;
+    background: rgba(255, 255, 255, 0.95);
+  }
+
+  .ride-form input:focus,
+  .ride-form textarea:focus,
+  .ride-form select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(251, 109, 15, 0.15);
+    outline: none;
+    background: #ffffff;
+  }
+
+  .ride-form textarea {
+    min-height: 110px;
+    resize: vertical;
+  }
+
+  .ride-form-submit {
+    letter-spacing: 0.02em;
+  }
+
+  .ride-form-aside {
+    position: sticky;
+    top: 120px;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+  }
+
+  .ride-form-aside .card-body {
+    padding: 1.5rem;
+  }
+
+  .ride-form-tip {
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+    background: rgba(251, 109, 15, 0.08);
+    border: 1px solid rgba(251, 109, 15, 0.2);
+  }
+
+  .ride-form-tip + .ride-form-tip {
+    margin-top: 0.75rem;
+  }
+
+  .ride-form-tip i {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    margin-top: 0.1rem;
+  }
+
+  .ride-form-steps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .ride-form-step {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: 999px;
+    background: rgba(15, 23, 42, 0.06);
+    color: #334155;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: 1.25rem;
+  }
+
+  .ride-form-step span {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-color);
+    color: #ffffff;
+    font-size: 0.75rem;
+  }
+
+  .ride-form-step:first-of-type {
+    margin-top: 0;
+  }
+
+  @media (max-width: 991.98px) {
+    .ride-form-aside {
+      position: static;
+    }
+  }
+</style>
+{% endblock %}
 {% block content %}
-<div class="row justify-content-center">
-  <div class="col-lg-8">
-    <div class="page-header">
-      <h1 class="page-title">Post a New Ride</h1>
-      <p class="page-subtitle">Share your journey and help others get around</p>
+<div class="ride-form-page">
+  <div class="page-header">
+    <h1 class="page-title">Post a New Ride</h1>
+    <p class="page-subtitle">Share your journey and help others get around</p>
+  </div>
+
+  <div class="row g-4 align-items-start">
+    <div class="col-lg-8">
+      <div class="card glass-effect ride-form-card">
+        <div class="card-body">
+          <form method="post" class="ride-form">
+            {% csrf_token %}
+
+            <div class="ride-form-step mb-2"><span>1</span>Route</div>
+            <div class="ride-form-section">
+              <div class="ride-form-section-header">
+                <span class="ride-form-section-icon">
+                  <i class="fas fa-route"></i>
+                </span>
+                <div>
+                  <h6 class="ride-form-section-title">Route</h6>
+                  <p class="ride-form-section-subtitle">Where you start and where you are headed.</p>
+                </div>
+              </div>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">
+                    <i class="fas fa-map-marker-alt text-primary me-1"></i>From
+                  </label>
+                  {{ form.origin }}
+                  <small class="text-muted d-block mt-1">City or neighborhood.</small>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">
+                    <i class="fas fa-map-marker-alt text-danger me-1"></i>To
+                  </label>
+                  {{ form.destination }}
+                  <small class="text-muted d-block mt-1">Your destination stop.</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="ride-form-step mb-2"><span>2</span>Schedule</div>
+            <div class="ride-form-section">
+              <div class="ride-form-section-header">
+                <span class="ride-form-section-icon">
+                  <i class="fas fa-clock"></i>
+                </span>
+                <div>
+                  <h6 class="ride-form-section-title">Schedule & Capacity</h6>
+                  <p class="ride-form-section-subtitle">Choose a clear time and the number of seats.</p>
+                </div>
+              </div>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">
+                    <i class="fas fa-clock me-1"></i>Departure Time
+                  </label>
+                  {{ form.departure_time }}
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label fw-semibold">
+                    <i class="fas fa-users me-1"></i>Available Seats
+                  </label>
+                  {{ form.seats }}
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label fw-semibold">
+                    <i class="fas fa-dollar-sign me-1"></i>Cost per Person
+                  </label>
+                  {{ form.cost }}
+                </div>
+              </div>
+            </div>
+
+            <div class="ride-form-step mb-2"><span>3</span>Vehicle</div>
+            <div class="ride-form-section">
+              <div class="ride-form-section-header">
+                <span class="ride-form-section-icon">
+                  <i class="fas fa-car"></i>
+                </span>
+                <div>
+                  <div class="d-flex align-items-center gap-2">
+                    <h6 class="ride-form-section-title">Vehicle Details</h6>
+                    <span class="ride-form-optional">Optional</span>
+                  </div>
+                  <p class="ride-form-section-subtitle">Help riders recognize your car quickly.</p>
+                </div>
+              </div>
+              <div class="row g-3">
+                <div class="col-md-4">
+                  <label class="form-label">Make</label>
+                  {{ form.car_make }}
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Model</label>
+                  {{ form.car_model }}
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Color</label>
+                  {{ form.car_color }}
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">License Plate</label>
+                  {{ form.plate }}
+                </div>
+              </div>
+            </div>
+
+            <div class="ride-form-step mb-2"><span>4</span>Pickup & Drop-off</div>
+            <div class="ride-form-section">
+              <div class="ride-form-section-header">
+                <span class="ride-form-section-icon">
+                  <i class="fas fa-map-pin"></i>
+                </span>
+                <div>
+                  <h6 class="ride-form-section-title">Pickup & Drop-off Notes</h6>
+                  <p class="ride-form-section-subtitle">Add landmarks to make meeting easy.</p>
+                </div>
+              </div>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">
+                    <i class="fas fa-map-pin me-1"></i>Pickup Notes
+                  </label>
+                  {{ form.pickup_notes }}
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-semibold">
+                    <i class="fas fa-map-pin me-1"></i>Drop-off Notes
+                  </label>
+                  {{ form.dropoff_notes }}
+                </div>
+              </div>
+            </div>
+
+            <div class="d-grid mt-4">
+              <button class="btn btn-primary btn-lg ride-form-submit" type="submit">
+                <i class="fas fa-plus me-2"></i>Post My Ride
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
 
-    <div class="card glass-effect">
-      <div class="card-body">
-        <form method="post">
-          {% csrf_token %}
-          
-          <div class="row g-3 mb-4">
-            <div class="col-md-6">
-              <label class="form-label fw-semibold">
-                <i class="fas fa-map-marker-alt text-primary me-1"></i>From
-              </label>
-              {{ form.origin }}
-            </div>
-            <div class="col-md-6">
-              <label class="form-label fw-semibold">
-                <i class="fas fa-map-marker-alt text-danger me-1"></i>To
-              </label>
-              {{ form.destination }}
+    <div class="col-lg-4">
+      <div class="card glass-effect ride-form-aside">
+        <div class="card-body">
+          <h5 class="fw-bold mb-3">Listing Tips</h5>
+          <div class="ride-form-tip">
+            <i class="fas fa-location-dot"></i>
+            <div>
+              <div class="fw-semibold">Be precise about pickup</div>
+              <div class="text-muted small">Landmarks help riders find you quickly.</div>
             </div>
           </div>
-
-          <div class="row g-3 mb-4">
-            <div class="col-md-6">
-              <label class="form-label fw-semibold">
-                <i class="fas fa-clock me-1"></i>Departure Time
-              </label>
-              {{ form.departure_time }}
-            </div>
-            <div class="col-md-3">
-              <label class="form-label fw-semibold">
-                <i class="fas fa-users me-1"></i>Available Seats
-              </label>
-              {{ form.seats }}
-            </div>
-            <div class="col-md-3">
-              <label class="form-label fw-semibold">
-                <i class="fas fa-dollar-sign me-1"></i>Cost per Person
-              </label>
-              {{ form.cost }}
+          <div class="ride-form-tip">
+            <i class="fas fa-clock"></i>
+            <div>
+              <div class="fw-semibold">Set a realistic time</div>
+              <div class="text-muted small">Include buffer for traffic or delays.</div>
             </div>
           </div>
-
-          <div class="mb-4">
-            <h6 class="fw-semibold mb-3">
-              <i class="fas fa-car me-2"></i>Vehicle Details (Optional)
-            </h6>
-            <div class="row g-3">
-              <div class="col-md-4">
-                <label class="form-label">Make</label>
-                {{ form.car_make }}
-              </div>
-              <div class="col-md-4">
-                <label class="form-label">Model</label>
-                {{ form.car_model }}
-              </div>
-              <div class="col-md-4">
-                <label class="form-label">Color</label>
-                {{ form.car_color }}
-              </div>
-              <div class="col-md-6">
-                <label class="form-label">License Plate</label>
-                {{ form.plate }}
-              </div>
+          <div class="ride-form-tip">
+            <i class="fas fa-car-side"></i>
+            <div>
+              <div class="fw-semibold">Vehicle details build trust</div>
+              <div class="text-muted small">Color and model help riders spot you.</div>
             </div>
           </div>
-
-          <div class="row g-3 mb-4">
-            <div class="col-md-6">
-              <label class="form-label fw-semibold">
-                <i class="fas fa-map-pin me-1"></i>Pickup Notes
-              </label>
-              {{ form.pickup_notes }}
-            </div>
-            <div class="col-md-6">
-              <label class="form-label fw-semibold">
-                <i class="fas fa-map-pin me-1"></i>Drop-off Notes
-              </label>
-              {{ form.dropoff_notes }}
-            </div>
-          </div>
-
-          <div class="d-grid">
-            <button class="btn btn-primary btn-lg" type="submit">
-              <i class="fas fa-plus me-2"></i>Post My Ride
-            </button>
-          </div>
-        </form>
+          <hr class="my-4">
+          <h6 class="fw-semibold">What happens next</h6>
+          <p class="text-muted small mb-0">
+            Your ride goes live immediately. Riders can request seats, and you approve or decline from the ride detail page.
+          </p>
+        </div>
       </div>
     </div>
   </div>

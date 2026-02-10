@@ -1,20 +1,33 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% block title %}Carpooling{% endblock %}</title>
+  <title>{% block title %}Radicar{% endblock %}</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <style>
     :root {
-      --primary-color: #6366f1;
-      --primary-dark: #4f46e5;
-      --accent-color: #ec4899;
+      --primary-color: #fb6d0f;
+      --primary-dark: #e35f0d;
+      --accent-color: #f59e0b;
       --bg-light: #f8fafc;
       --text-dark: #1e293b;
       --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
       --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    .text-primary {
+      color: var(--primary-color) !important;
+    }
+
+    .bg-primary {
+      background-color: var(--primary-color) !important;
+    }
+
+    .border-primary {
+      border-color: var(--primary-color) !important;
     }
 
     body {
@@ -37,6 +50,19 @@
       font-size: 1.5rem;
       color: var(--primary-color) !important;
       text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .brand-logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 0.6rem;
+      box-shadow: var(--shadow-soft);
+      object-fit: contain;
+      background: #ffffff;
+      padding: 2px;
     }
 
     .nav-link {
@@ -81,6 +107,20 @@
       background: var(--primary-color);
       border-color: var(--primary-color);
       transform: translateY(-1px);
+    }
+
+    .btn-ride-detail {
+      min-width: 140px;
+      text-align: center;
+    }
+
+    .ride-card-footer {
+      gap: 0.75rem;
+    }
+
+    .ride-card-meta {
+      min-width: 0;
+      flex: 1 1 auto;
     }
 
     .card {
@@ -141,14 +181,21 @@
       border: 1px solid rgba(255, 255, 255, 0.2);
     }
   </style>
+  {% block extra_head %}{% endblock %}
 </head>
 <body>
 <nav class="navbar navbar-expand-lg fixed-top">
   <div class="container">
     <a class="navbar-brand" href="{% url 'ride_list' %}">
-      <i class="fas fa-car me-2"></i>Carpooling
+      <img src="{% static 'img/radicar-logo.png' %}" alt="Radicar logo" class="brand-logo">
+      RADICAR!
     </a>
     <ul class="navbar-nav ms-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'ride_chat' %}">
+          <i class="fas fa-comments me-1"></i>Chat
+        </a>
+      </li>
       {% if user.is_authenticated %}
       <li class="nav-item">
         <a class="nav-link" href="{% url 'ride_create' %}">

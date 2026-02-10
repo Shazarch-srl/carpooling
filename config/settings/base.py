@@ -1,7 +1,12 @@
+import os
 from pathlib import Path
+
+from dotenv import load_dotenv
 
 # Root of the repository
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
+
+load_dotenv(BASE_DIR / ".env")
 
 SECRET_KEY = "django-insecure-30p#7voj7y)o617(=+c&o-fv*g28&$duj9@@($7po8$dd)5bb@"
 
@@ -88,3 +93,6 @@ LOGIN_REDIRECT_URL = "ride_list"
 ACCOUNT_LOGIN_METHODS = {"email"}
 ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]
 ACCOUNT_EMAIL_VERIFICATION = "optional"
+
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
+OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-5")

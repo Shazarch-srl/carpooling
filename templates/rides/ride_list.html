@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Find Your Perfect Ride | Carpooling{% endblock %}
+{% block title %}Find Your Perfect Ride | Radicar{% endblock %}
 {% block content %}
 <div class="page-header">
   <h1 class="page-title">Find Your Perfect Ride</h1>
@@ -30,76 +30,5 @@
   </div>
 </div>
 
-<div class="row g-4">
-  {% for ride in rides %}
-    <div class="col-lg-6">
-      <div class="card h-100">
-        <div class="card-body">
-          <div class="d-flex justify-content-between align-items-start mb-3">
-            <div>
-              <h5 class="card-title mb-1">
-                <i class="fas fa-route text-primary me-2"></i>
-                {{ ride.origin }} → {{ ride.destination }}
-              </h5>
-              <p class="text-muted mb-0">
-                <i class="fas fa-user-circle me-1"></i>
-                Driver: {{ ride.driver.first_name }}
-              </p>
-            </div>
-            <span class="badge bg-primary rounded-pill fs-6">${{ ride.cost }}</span>
-          </div>
-          
-          <div class="row g-2 mb-3">
-            <div class="col-6">
-              <small class="text-muted d-block">
-                <i class="fas fa-clock me-1"></i>Departure
-              </small>
-              <span class="fw-semibold">{{ ride.departure_time|date:"M j, g:i A" }}</span>
-            </div>
-            <div class="col-6">
-              <small class="text-muted d-block">
-                <i class="fas fa-users me-1"></i>Available Seats
-              </small>
-              <span class="fw-semibold">{{ ride.seats }} seat{{ ride.seats|pluralize }}</span>
-            </div>
-          </div>
-
-          {% if ride.car_make %}
-          <div class="mb-3">
-            <small class="text-muted d-block">
-              <i class="fas fa-car me-1"></i>Vehicle
-            </small>
-            <span class="fw-semibold">{{ ride.car_make }} {{ ride.car_model }}</span>
-            {% if ride.car_color %}
-              <span class="text-muted">• {{ ride.car_color }}</span>
-            {% endif %}
-          </div>
-          {% endif %}
-
-          <div class="d-flex justify-content-between align-items-center">
-            <small class="text-muted">
-              {{ ride.departure_time|timeuntil }} from now
-            </small>
-            <a class="btn btn-outline-primary" href="{% url 'ride_detail' ride.pk %}">
-              View Details <i class="fas fa-arrow-right ms-1"></i>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  {% empty %}
-    <div class="col-12">
-      <div class="text-center py-5">
-        <i class="fas fa-search text-muted mb-3" style="font-size: 3rem;"></i>
-        <h4 class="text-muted">No rides found</h4>
-        <p class="text-muted">Try adjusting your search criteria or check back later</p>
-        {% if user.is_authenticated %}
-          <a href="{% url 'ride_create' %}" class="btn btn-primary mt-3">
-            <i class="fas fa-plus me-2"></i>Post Your Ride
-          </a>
-        {% endif %}
-      </div>
-    </div>
-  {% endfor %}
-</div>
+{% include "rides/_ride_cards.html" %}
 {% endblock %}

@@ -1,0 +1,790 @@
+[
+  {
+    "model": "users.user",
+    "pk": 201,
+    "fields": {
+      "username": "driver_luca",
+      "email": "luca@example.com",
+      "password": "!",
+      "first_name": "Luca",
+      "last_name": "Bianchi",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 202,
+    "fields": {
+      "username": "driver_giulia",
+      "email": "giulia@example.com",
+      "password": "!",
+      "first_name": "Giulia",
+      "last_name": "Rossi",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 203,
+    "fields": {
+      "username": "driver_marco",
+      "email": "marco@example.com",
+      "password": "!",
+      "first_name": "Marco",
+      "last_name": "Conti",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 204,
+    "fields": {
+      "username": "driver_francesca",
+      "email": "francesca@example.com",
+      "password": "!",
+      "first_name": "Francesca",
+      "last_name": "Gallo",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 205,
+    "fields": {
+      "username": "driver_matteo",
+      "email": "matteo@example.com",
+      "password": "!",
+      "first_name": "Matteo",
+      "last_name": "Fontana",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 206,
+    "fields": {
+      "username": "driver_alessia",
+      "email": "alessia@example.com",
+      "password": "!",
+      "first_name": "Alessia",
+      "last_name": "Greco",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 207,
+    "fields": {
+      "username": "driver_lorenzo",
+      "email": "lorenzo@example.com",
+      "password": "!",
+      "first_name": "Lorenzo",
+      "last_name": "Rinaldi",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 208,
+    "fields": {
+      "username": "driver_chiara",
+      "email": "chiara@example.com",
+      "password": "!",
+      "first_name": "Chiara",
+      "last_name": "Moretti",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 209,
+    "fields": {
+      "username": "driver_davide",
+      "email": "davide@example.com",
+      "password": "!",
+      "first_name": "Davide",
+      "last_name": "Costa",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 210,
+    "fields": {
+      "username": "driver_sara",
+      "email": "sara@example.com",
+      "password": "!",
+      "first_name": "Sara",
+      "last_name": "Ferri",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 1001,
+    "fields": {
+      "driver": 201,
+      "origin": "Siena",
+      "destination": "Radicondoli",
+      "departure_time": "2026-02-10T08:00:00Z",
+      "seats": 3,
+      "cost": "12.00",
+      "car_make": "Fiat",
+      "car_model": "Panda",
+      "car_color": "White",
+      "plate": "SI123AA",
+      "pickup_notes": "Pickup near Siena train station.",
+      "dropoff_notes": "Drop at Radicondoli center."
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 1002,
+    "fields": {
+      "driver": 202,
+      "origin": "Radicondoli",
+      "destination": "Siena",
+      "departure_time": "2026-02-10T09:30:00Z",
+      "seats": 2,
+      "cost": "11.00",
+      "car_make": "Toyota",
+      "car_model": "Yaris",
+      "car_color": "Blue",
+      "plate": "SI234BB",
+      "pickup_notes": "Pickup at Piazza della Repubblica.",
+      "dropoff_notes": "Drop at Siena center."
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 1003,
+    "fields": {
+      "driver": 203,
+      "origin": "Siena",
+      "destination": "Colle di Val d Elsa",
+      "departure_time": "2026-02-10T13:00:00Z",
+      "seats": 4,
+      "cost": "7.50",
+      "car_make": "Volkswagen",
+      "car_model": "Polo",
+      "car_color": "Gray",
+      "plate": "SI345CC",
+      "pickup_notes": "Meet at Fortezza Medicea.",
+      "dropoff_notes": "Drop at Colle center."
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 1004,
+    "fields": {
+      "driver": 204,
+      "origin": "Radicondoli",
+      "destination": "Poggibonsi",
+      "departure_time": "2026-02-10T17:15:00Z",
+      "seats": 3,
+      "cost": "9.00",
+      "car_make": "Renault",
+      "car_model": "Clio",
+      "car_color": "Red",
+      "plate": "SI456DD",
+      "pickup_notes": "Pickup near Radicondoli parking area.",
+      "dropoff_notes": "Drop near Poggibonsi station."
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 1005,
+    "fields": {
+      "driver": 205,
+      "origin": "Siena",
+      "destination": "San Gimignano",
+      "departure_time": "2026-02-11T09:00:00Z",
+      "seats": 2,
+      "cost": "10.00",
+      "car_make": "Peugeot",
+      "car_model": "208",
+      "car_color": "Black",
+      "plate": "SI567EE",
+      "pickup_notes": "Pickup at Siena bus terminal.",
+      "dropoff_notes": "Drop at San Gimignano gate."
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 1006,
+    "fields": {
+      "driver": 206,
+      "origin": "San Gimignano",
+      "destination": "Siena",
+      "departure_time": "2026-02-11T11:30:00Z",
+      "seats": 3,
+      "cost": "9.50",
+      "car_make": "Opel",
+      "car_model": "Corsa",
+      "car_color": "Silver",
+      "plate": "SI678FF",
+      "pickup_notes": "Pickup at Porta San Giovanni.",
+      "dropoff_notes": "Drop near Siena center."
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 1007,
+    "fields": {
+      "driver": 207,
+      "origin": "Siena",
+      "destination": "Monteriggioni",
+      "departure_time": "2026-02-11T15:00:00Z",
+      "seats": 4,
+      "cost": "6.00",
+      "car_make": "Fiat",
+      "car_model": "500",
+      "car_color": "White",
+      "plate": "SI789GG",
+      "pickup_notes": "Pickup at Siena Piazza del Campo.",
+      "dropoff_notes": "Drop near Monteriggioni walls."
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 1008,
+    "fields": {
+      "driver": 208,
+      "origin": "Monteriggioni",
+      "destination": "Siena",
+      "departure_time": "2026-02-11T18:20:00Z",
+      "seats": 3,
+      "cost": "6.50",
+      "car_make": "Ford",
+      "car_model": "Fiesta",
+      "car_color": "Blue",
+      "plate": "SI890HH",
+      "pickup_notes": "Pickup at Monteriggioni parking.",
+      "dropoff_notes": "Drop at Siena north."
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 1009,
+    "fields": {
+      "driver": 209,
+      "origin": "Siena",
+      "destination": "Volterra",
+      "departure_time": "2026-02-12T07:45:00Z",
+      "seats": 2,
+      "cost": "14.00",
+      "car_make": "Hyundai",
+      "car_model": "i20",
+      "car_color": "Gray",
+      "plate": "SI901JJ",
+      "pickup_notes": "Pickup at Siena train station.",
+      "dropoff_notes": "Drop at Volterra center."
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 1010,
+    "fields": {
+      "driver": 210,
+      "origin": "Volterra",
+      "destination": "Siena",
+      "departure_time": "2026-02-12T16:30:00Z",
+      "seats": 3,
+      "cost": "14.50",
+      "car_make": "Honda",
+      "car_model": "Jazz",
+      "car_color": "Silver",
+      "plate": "SI012KK",
+      "pickup_notes": "Pickup at Volterra Porta all Arco.",
+      "dropoff_notes": "Drop at Siena center."
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 1011,
+    "fields": {
+      "driver": 201,
+      "origin": "Radicondoli",
+      "destination": "Casole d Elsa",
+      "departure_time": "2026-02-13T08:15:00Z",
+      "seats": 4,
+      "cost": "8.00",
+      "car_make": "Fiat",
+      "car_model": "Tipo",
+      "car_color": "Blue",
+      "plate": "SI123AB",
+      "pickup_notes": "Pickup near Radicondoli church.",
+      "dropoff_notes": "Drop in Casole d Elsa center."
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 1012,
+    "fields": {
+      "driver": 202,
+      "origin": "Casole d Elsa",
+      "destination": "Siena",
+      "departure_time": "2026-02-13T12:30:00Z",
+      "seats": 2,
+      "cost": "9.00",
+      "car_make": "Toyota",
+      "car_model": "Aygo",
+      "car_color": "White",
+      "plate": "SI234BC",
+      "pickup_notes": "Pickup near Casole main square.",
+      "dropoff_notes": "Drop near Siena stadium."
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 1013,
+    "fields": {
+      "driver": 203,
+      "origin": "Siena",
+      "destination": "Sovicille",
+      "departure_time": "2026-02-13T17:45:00Z",
+      "seats": 3,
+      "cost": "5.00",
+      "car_make": "Volkswagen",
+      "car_model": "Golf",
+      "car_color": "Black",
+      "plate": "SI345CD",
+      "pickup_notes": "Pickup at Siena centro.",
+      "dropoff_notes": "Drop at Sovicille town hall."
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 1014,
+    "fields": {
+      "driver": 204,
+      "origin": "Sovicille",
+      "destination": "Siena",
+      "departure_time": "2026-02-14T08:40:00Z",
+      "seats": 2,
+      "cost": "5.50",
+      "car_make": "Renault",
+      "car_model": "Captur",
+      "car_color": "Red",
+      "plate": "SI456DE",
+      "pickup_notes": "Pickup near Sovicille parking.",
+      "dropoff_notes": "Drop at Siena center."
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 1015,
+    "fields": {
+      "driver": 205,
+      "origin": "Siena",
+      "destination": "Chiusdino",
+      "departure_time": "2026-02-14T14:10:00Z",
+      "seats": 3,
+      "cost": "7.00",
+      "car_make": "Peugeot",
+      "car_model": "2008",
+      "car_color": "Gray",
+      "plate": "SI567EF",
+      "pickup_notes": "Pickup at Siena bus station.",
+      "dropoff_notes": "Drop at Chiusdino center."
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 1016,
+    "fields": {
+      "driver": 206,
+      "origin": "Chiusdino",
+      "destination": "Radicondoli",
+      "departure_time": "2026-02-14T18:00:00Z",
+      "seats": 2,
+      "cost": "6.00",
+      "car_make": "Opel",
+      "car_model": "Astra",
+      "car_color": "Silver",
+      "plate": "SI678FG",
+      "pickup_notes": "Pickup at Chiusdino square.",
+      "dropoff_notes": "Drop at Radicondoli center."
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 1017,
+    "fields": {
+      "driver": 207,
+      "origin": "Siena",
+      "destination": "Montalcino",
+      "departure_time": "2026-02-15T09:20:00Z",
+      "seats": 4,
+      "cost": "11.00",
+      "car_make": "Fiat",
+      "car_model": "500X",
+      "car_color": "Green",
+      "plate": "SI789GH",
+      "pickup_notes": "Pickup at Siena parking Santa Caterina.",
+      "dropoff_notes": "Drop at Montalcino center."
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 1018,
+    "fields": {
+      "driver": 208,
+      "origin": "Montalcino",
+      "destination": "Siena",
+      "departure_time": "2026-02-15T18:10:00Z",
+      "seats": 3,
+      "cost": "11.50",
+      "car_make": "Ford",
+      "car_model": "Focus",
+      "car_color": "Blue",
+      "plate": "SI890HI",
+      "pickup_notes": "Pickup at Montalcino parking.",
+      "dropoff_notes": "Drop at Siena center."
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 1019,
+    "fields": {
+      "driver": 209,
+      "origin": "Siena",
+      "destination": "Buonconvento",
+      "departure_time": "2026-02-16T08:30:00Z",
+      "seats": 2,
+      "cost": "6.50",
+      "car_make": "Hyundai",
+      "car_model": "i30",
+      "car_color": "Black",
+      "plate": "SI901IJ",
+      "pickup_notes": "Pickup near Siena train station.",
+      "dropoff_notes": "Drop at Buonconvento center."
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 1020,
+    "fields": {
+      "driver": 210,
+      "origin": "Buonconvento",
+      "destination": "Siena",
+      "departure_time": "2026-02-16T17:20:00Z",
+      "seats": 3,
+      "cost": "7.00",
+      "car_make": "Honda",
+      "car_model": "Civic",
+      "car_color": "Silver",
+      "plate": "SI012JK",
+      "pickup_notes": "Pickup at Buonconvento parking.",
+      "dropoff_notes": "Drop at Siena south."
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 1021,
+    "fields": {
+      "driver": 201,
+      "origin": "Siena",
+      "destination": "Asciano",
+      "departure_time": "2026-02-17T07:40:00Z",
+      "seats": 3,
+      "cost": "6.00",
+      "car_make": "Fiat",
+      "car_model": "Panda",
+      "car_color": "White",
+      "plate": "SI123AC",
+      "pickup_notes": "Pickup at Siena bus station.",
+      "dropoff_notes": "Drop at Asciano center."
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 1022,
+    "fields": {
+      "driver": 202,
+      "origin": "Asciano",
+      "destination": "Siena",
+      "departure_time": "2026-02-17T17:00:00Z",
+      "seats": 2,
+      "cost": "6.50",
+      "car_make": "Toyota",
+      "car_model": "Corolla",
+      "car_color": "Gray",
+      "plate": "SI234BD",
+      "pickup_notes": "Pickup at Asciano square.",
+      "dropoff_notes": "Drop at Siena center."
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 1023,
+    "fields": {
+      "driver": 203,
+      "origin": "Siena",
+      "destination": "San Quirico d Orcia",
+      "departure_time": "2026-02-18T09:10:00Z",
+      "seats": 4,
+      "cost": "12.00",
+      "car_make": "Volkswagen",
+      "car_model": "T-Roc",
+      "car_color": "Blue",
+      "plate": "SI345CE",
+      "pickup_notes": "Pickup at Siena north.",
+      "dropoff_notes": "Drop at San Quirico d Orcia center."
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 1024,
+    "fields": {
+      "driver": 204,
+      "origin": "San Quirico d Orcia",
+      "destination": "Siena",
+      "departure_time": "2026-02-18T18:10:00Z",
+      "seats": 2,
+      "cost": "12.50",
+      "car_make": "Renault",
+      "car_model": "Megane",
+      "car_color": "Red",
+      "plate": "SI456DF",
+      "pickup_notes": "Pickup at San Quirico d Orcia center.",
+      "dropoff_notes": "Drop at Siena center."
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 1025,
+    "fields": {
+      "driver": 205,
+      "origin": "Siena",
+      "destination": "Gaiole in Chianti",
+      "departure_time": "2026-02-19T08:50:00Z",
+      "seats": 3,
+      "cost": "13.00",
+      "car_make": "Peugeot",
+      "car_model": "308",
+      "car_color": "Black",
+      "plate": "SI567EG",
+      "pickup_notes": "Pickup at Siena center.",
+      "dropoff_notes": "Drop at Gaiole in Chianti center."
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 1026,
+    "fields": {
+      "driver": 206,
+      "origin": "Gaiole in Chianti",
+      "destination": "Siena",
+      "departure_time": "2026-02-19T18:30:00Z",
+      "seats": 2,
+      "cost": "13.50",
+      "car_make": "Opel",
+      "car_model": "Mokka",
+      "car_color": "White",
+      "plate": "SI678FH",
+      "pickup_notes": "Pickup at Gaiole in Chianti square.",
+      "dropoff_notes": "Drop at Siena center."
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 1027,
+    "fields": {
+      "driver": 207,
+      "origin": "Siena",
+      "destination": "Radda in Chianti",
+      "departure_time": "2026-02-20T09:00:00Z",
+      "seats": 4,
+      "cost": "12.50",
+      "car_make": "Fiat",
+      "car_model": "500L",
+      "car_color": "Green",
+      "plate": "SI789GI",
+      "pickup_notes": "Pickup at Siena Piazza del Campo.",
+      "dropoff_notes": "Drop at Radda in Chianti center."
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 1028,
+    "fields": {
+      "driver": 208,
+      "origin": "Radda in Chianti",
+      "destination": "Siena",
+      "departure_time": "2026-02-20T18:15:00Z",
+      "seats": 3,
+      "cost": "12.50",
+      "car_make": "Ford",
+      "car_model": "Puma",
+      "car_color": "Blue",
+      "plate": "SI890HJ",
+      "pickup_notes": "Pickup at Radda parking.",
+      "dropoff_notes": "Drop at Siena center."
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 1029,
+    "fields": {
+      "driver": 209,
+      "origin": "Siena",
+      "destination": "Castellina in Chianti",
+      "departure_time": "2026-02-21T08:20:00Z",
+      "seats": 2,
+      "cost": "11.00",
+      "car_make": "Hyundai",
+      "car_model": "Kona",
+      "car_color": "Gray",
+      "plate": "SI901IK",
+      "pickup_notes": "Pickup at Siena north.",
+      "dropoff_notes": "Drop at Castellina in Chianti center."
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 1030,
+    "fields": {
+      "driver": 210,
+      "origin": "Castellina in Chianti",
+      "destination": "Siena",
+      "departure_time": "2026-02-21T17:40:00Z",
+      "seats": 3,
+      "cost": "11.50",
+      "car_make": "Honda",
+      "car_model": "HR-V",
+      "car_color": "Silver",
+      "plate": "SI012KL",
+      "pickup_notes": "Pickup at Castellina parking.",
+      "dropoff_notes": "Drop at Siena center."
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 1031,
+    "fields": {
+      "driver": 201,
+      "origin": "Siena",
+      "destination": "Murlo",
+      "departure_time": "2026-02-22T09:35:00Z",
+      "seats": 3,
+      "cost": "8.50",
+      "car_make": "Fiat",
+      "car_model": "Panda",
+      "car_color": "White",
+      "plate": "SI123AD",
+      "pickup_notes": "Pickup at Siena center.",
+      "dropoff_notes": "Drop at Murlo center."
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 1032,
+    "fields": {
+      "driver": 202,
+      "origin": "Murlo",
+      "destination": "Siena",
+      "departure_time": "2026-02-22T18:10:00Z",
+      "seats": 2,
+      "cost": "8.50",
+      "car_make": "Toyota",
+      "car_model": "Yaris Cross",
+      "car_color": "Gray",
+      "plate": "SI234BE",
+      "pickup_notes": "Pickup at Murlo square.",
+      "dropoff_notes": "Drop at Siena center."
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 1033,
+    "fields": {
+      "driver": 203,
+      "origin": "Siena",
+      "destination": "Rapolano Terme",
+      "departure_time": "2026-02-23T08:10:00Z",
+      "seats": 4,
+      "cost": "7.50",
+      "car_make": "Volkswagen",
+      "car_model": "T-Cross",
+      "car_color": "Black",
+      "plate": "SI345CF",
+      "pickup_notes": "Pickup at Siena station.",
+      "dropoff_notes": "Drop at Rapolano Terme center."
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 1034,
+    "fields": {
+      "driver": 204,
+      "origin": "Rapolano Terme",
+      "destination": "Siena",
+      "departure_time": "2026-02-23T17:30:00Z",
+      "seats": 3,
+      "cost": "7.50",
+      "car_make": "Renault",
+      "car_model": "Kadjar",
+      "car_color": "Red",
+      "plate": "SI456DG",
+      "pickup_notes": "Pickup at Rapolano Terme square.",
+      "dropoff_notes": "Drop at Siena center."
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 1035,
+    "fields": {
+      "driver": 205,
+      "origin": "Radicondoli",
+      "destination": "Siena",
+      "departure_time": "2026-02-24T08:00:00Z",
+      "seats": 3,
+      "cost": "11.50",
+      "car_make": "Peugeot",
+      "car_model": "3008",
+      "car_color": "Blue",
+      "plate": "SI567EH",
+      "pickup_notes": "Pickup at Radicondoli center.",
+      "dropoff_notes": "Drop at Siena center."
+    }
+  },
+  {
+    "model": "rides.ride",
+    "pk": 1036,
+    "fields": {
+      "driver": 206,
+      "origin": "Siena",
+      "destination": "Radicondoli",
+      "departure_time": "2026-02-24T18:00:00Z",
+      "seats": 2,
+      "cost": "11.00",
+      "car_make": "Opel",
+      "car_model": "Crossland",
+      "car_color": "White",
+      "plate": "SI678FI",
+      "pickup_notes": "Pickup at Siena center.",
+      "dropoff_notes": "Drop at Radicondoli center."
+    }
+  }
+]

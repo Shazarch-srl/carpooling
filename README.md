@@ -1,4 +1,4 @@
-# Carpooling
+# Radicar
 
 A simple carpooling web application built with Django and Bootstrap.
 
